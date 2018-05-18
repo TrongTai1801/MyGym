@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PhongTap mPT = ViewBag.mPT;
+}
+
+@using MyGym.Models;
+
+<h2>Sửa Phòng Tập</h2>
+
+<br />
+<form action="/PhongTap/EditPT" method="post">
+    Mã Phòng Tập <br /> <input type="text" class="form-control" name="mapt" required id="mapt" value="@mPT.MaPhongTap" /><br />
+    Tên Phòng Tập <br /><input type="text" class="form-control" name="tenpt" required id="tenpt" value="@mPT.TenPhongTap" /><br />
+    <br />
+    <input type="submit" class="btn btn-primary" value="Update"/> |
+    @Html.ActionLink("Back To List", "Index", "PhongTap")
+</form>
+

@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ChucVu mCv = ViewBag.mCv;
+}
+
+@using MyGym.Models;
+
+<h2>Sửa Chức Vụ</h2>
+
+<br />
+<form action="/ChucVu/EditCV" method="post">
+    Mã Chức Vụ <br /> <input type="text" class="form-control" name="macv" id="macv" required value="@mCv.MaChucVu"/><br />
+    Tên Chức Vụ <br /><input type="text" class="form-control" name="tencv" id="tencv" required value="@mCv.TenChucVu"/><br />
+    Hệ Số Chức Vụ <br /><input type="number" class="form-control" name="hscv" id="hscv" required value="@mCv.HeSoChucVu"/><br />
+    <br />
+    <input type="submit" class="btn btn-primary" value="Update" />
+</form>
+

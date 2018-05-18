@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<TrangThietBi> mListTTB = ViewBag.mListTTB;
+    BLL mBll = ViewBag.mBll;
+    if (mListTTB != null)
+    {
+        Session["TTBsize"] = mListTTB.Count;
+        int c = 0;
+        foreach (TrangThietBi hv in mListTTB)
+        {
+            Session["TTB" + c.ToString()] = hv.MaThietBi;
+            c++;
+        }
+    }
+}
+@using MyGym.Models;
+
+<h2>Danh Sách Trang Thiết Bị</h2>
+
+<div class="collapse navbar-collapse" id="navbarColor01">
+    @if (Session["Login"].ToString().Equals("1"))
+    {
+        <p>
+            @if (!Session["Login"].ToString().Equals("1"))
+            {
+                @Html.ActionLink("Create New", "Create", "TrangThietBi", null, new { onclick = "javascript:return false;" })
+            }
+            else
+            {
+                @Html.ActionLink("Create New", "Create", "TrangThietBi", null, null)
+            }
+        </p>
+    }
+
+</div>
+<form class="form-inline" action="/TrangThietBi/Search" method="post" >
+    <input class="form-control" type="text" name="search" id="search" placeholder="Search" required>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form><br />
+<form class="form-inline" action="/TrangThietBi/Sort" method="post">
+    <select name="sort" class="form-control">
+        <option value="ten">Tên</option>
+    </select>
+    <button class="btn btn-primary" type="submit">Sort</button>
+</form><br />
+<div>
+    <table class="table">
+        <tr>
+            <th>Mã Thiết Bị</th>
+            <th>Tên THiết Bị</th>
+            <th>Tình Trạng Sử Dụng</th>
+            <th>Phòng Tập</th>
+            <th></th>
+        </tr>
+        @if (mListTTB == null) {
+            <h5>Không có kết quả phù hợp.</h5>
+        }
+        else {
+            for (int i = 0; i < mListTTB.Count; i++)
+        {
+            <tr>
+                <td>@mListTTB[i].MaThietBi</td>
+                <td>@mListTTB[i].TenThietBi</td>
+                <td>@mListTTB[i].TinhTrangSuDung</td>
+                <td>@mBll.GetTenPhongTapFromMaPhongTap(mListTTB[i].MaPhongTap)</td>
+                @if (Session["Login"].ToString().Equals("1")) {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "TrangThietBi", new { matb = mListTTB[i].MaThietBi }, null)|
+                    @Html.ActionLink("Delete", "Delete", "TrangThietBi", new { matb = mListTTB[i].MaThietBi }, null)
+                </td>
+                }
+                
+            </tr>
+        }
+        }
+    </table>
+</div>
+

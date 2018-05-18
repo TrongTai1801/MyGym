@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    GoiTap mGT = ViewBag.mGT;
+}
+
+@using MyGym.Models;
+
+<h2>Sửa Gói Tập</h2>
+
+<br />
+<form action="/GoiTap/EditGT" method="post">
+    Mã Gói <br /> <input type="text" class="form-control" name="magt" id="magt" required value="@mGT.MaGoi"/><br />
+    Tên Gói <br /><input type="text" class="form-control" name="tengt" id="tengt" required value="@mGT.TenGoi"/><br />
+    Giá Thành <br /><input type="number" class="form-control" name="giathanh" id="giathanh" required value="@mGT.GiaThanh"/><br />
+    <br />
+    <input type="submit" class="btn btn-primary" value="Update" /> |
+    @Html.ActionLink("Back To List", "Index", "GoiTap")
+</form>
+

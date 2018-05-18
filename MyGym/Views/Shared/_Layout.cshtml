@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/Content/MyStyle.css" />
+    <title>@ViewBag.Title - MyGym</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("MyGym", "Index", "Home", new { area = "" }, new { @class = "navbar-brand " })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Pricing", "Index", "GoiTap")</li>
+                    <li>@Html.ActionLink("Rooms", "Index", "PhongTap", null, null)</li>
+                    <li>@Html.ActionLink("Equipment", "Index", "TrangThietBi", null, null)</li>
+                    @if (Session["LogIn"].ToString().Equals("1"))
+                    {
+                        <li>
+                        @if (!Session["Login"].ToString().Equals("1"))
+                        {
+                            @Html.ActionLink("Member", "Index", "HoiVien", null, new { onclick = "javascript:return false;" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Member", "Index", "HoiVien", null, null)
+                        }
+                    </li>
+                    <li>
+                        @if (!Session["Login"].ToString().Equals("1"))
+                        {
+                            @Html.ActionLink("Staff", "Index", "NhanVien", null, new { onclick = "javascript:return false;" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Staff", "Index", "NhanVien", null, null)
+                        }
+                    </li>
+                    <li>
+                        @if (!Session["Login"].ToString().Equals("1"))
+                        {
+                            @Html.ActionLink("Account", "Index", "TaiKhoan", null, new { onclick = "javascript:return false;" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Account", "Index", "TaiKhoan", null, null)
+                        }
+                    </li>
+                    }
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="~/LogOut/Index"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - MyGym Website</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

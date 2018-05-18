@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<PhongTap> mListPT = ViewBag.mListPT;
+    if (mListPT != null)
+    {
+        Session["PTsize"] = mListPT.Count;
+        int c = 0;
+        foreach (PhongTap hv in mListPT)
+        {
+            Session["PT" + c.ToString()] = hv.MaPhongTap;
+            c++;
+        }
+    }
+}
+@using MyGym.Models;
+
+<h2>Danh Sách Phòng Tập</h2>
+
+<div class="collapse navbar-collapse" id="navbarColor01">
+    @if (Session["Login"].ToString().Equals("1"))
+    {
+        <p>
+            @if (!Session["Login"].ToString().Equals("1"))
+            {
+                @Html.ActionLink("Create New", "Create", "PhongTap", null, new { onclick = "javascript:return false;" })
+            }
+            else
+            {
+                @Html.ActionLink("Create New", "Create", "PhongTap", null, null)
+            }
+        </p>
+    }
+
+</div>
+<form class="form-inline" action="/PhongTap/Search" method="post">
+    <input class="form-control" type="text" name="search" id="search" placeholder="Search" required>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form><br />
+<form class="form-inline" action="/PhongTap/Sort" method="post">
+    <select name="sort" class="form-control">
+        <option value="ten">Tên</option>
+    </select>
+    <button class="btn btn-primary" type="submit">Sort</button>
+</form><br />
+<div>
+    <table class="table">
+        <tr>
+            <th>Mã Phòng Tập</th>
+            <th>Tên Phòng Tập</th>
+            <th></th>
+        </tr>
+        
+        @if (mListPT == null) {
+            <h5>Không có kết quả phù hợp.</h5>
+        }
+        else {
+            for (int i = 0; i < mListPT.Count; i++)
+        {
+            <tr>
+                <td>@mListPT[i].MaPhongTap</td>
+                <td>@mListPT[i].TenPhongTap</td>
+                @if (Session["Login"].ToString().Equals("1"))
+                {
+                <td>
+                    @if (!Session["Login"].ToString().Equals("1"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", "PhongTap", new { mapt = mListPT[i].MaPhongTap }, new { onclick = "javascript:return false;" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Edit", "Edit", "PhongTap", new { mapt = mListPT[i].MaPhongTap }, null)
+                    }
+                    |
+                    @if (!Session["Login"].ToString().Equals("1"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", "PhongTap", new { mapt = mListPT[i].MaPhongTap }, new { onclick = "javascript:return false;" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Delete", "Delete", "PhongTap", new { mapt = mListPT[i].MaPhongTap }, null)
+                    }
+                    |
+                    @Html.ActionLink("Detail", "SearchFromPT", "TrangThietBi", new { mapt = mListPT[i].MaPhongTap }, null)
+                </td>
+
+                }
+                else {
+                <td>
+                    @Html.ActionLink("Detail", "SearchFromPT", "TrangThietBi", new { mapt = mListPT[i].MaPhongTap }, null)
+                </td>
+                    
+                }
+            </tr>
+        }
+        }
+    </table>
+</div>
+

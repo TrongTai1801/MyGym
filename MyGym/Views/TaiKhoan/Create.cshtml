@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using MyGym.Models;
+
+<h2>Thêm Tài Khoản</h2>
+
+<br />
+<form action="/TaiKhoan/AddTK" name="form" method="post">
+    Tên Đăng Nhập <br /> <input type="text" class="form-control" name="tendn" id="tendn" required/><br />
+    Mật Khẩu <br /><input type="password" class="form-control" name="mk" id="mk" required/><br />
+    <div class="form-inline">
+        Goi Dang Ky <br />
+        <select name="permission" class="form-control">
+            <option value="1" selected>1</option>
+            <option value="2" selected>2</option>
+        </select>
+    </div>
+    <br />
+    <input type="submit" class="btn btn-primary" value="Create"/> |
+    @Html.ActionLink("Back To List", "Index", "TaiKhoan")
+</form>
+

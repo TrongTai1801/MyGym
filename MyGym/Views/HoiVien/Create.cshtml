@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<GoiTap> mListGT = ViewBag.mListGT;
+}
+
+@using MyGym.Models;
+
+<h2>Thêm Hội Viên</h2>
+
+<br />
+<form action="/HoiVien/AddHV" name="form" method="post" >
+    Mã Hội Viên <br /> <input type="text" class="form-control" name="mahv" id="mahv" required/><br />
+    Tên Hội Viên <br /><input type="text" class="form-control" name="tenhv" id="tenhv" required/><br />
+    CMND <br /><input type="number" class="form-control" name="cmnd" id="cmnd" required/><br />
+    Ngày Sinh <br /><input type="date" class="form-control" name="ngaysinh" id="ngaysinh" required/><br />
+    SDT <br /><input type="number" class="form-control" name="sdt" id="sdt" required/><br />
+    Địa Chỉ <br /><input type="text" class="form-control" name="diachi" id="diachi" required /><br />
+    <fieldset>
+        <legend>Gioi tinh</legend>
+        <input type="radio" name="gioitinh" value="male" checked /><label> Male</label><br />
+        <input type="radio" name="gioitinh" value="female" /><label> Female</label><br /><br />
+    </fieldset>
+    <div class="form-inline">
+         Goi Dang Ky <br />
+    <select name="magoi" class="form-control">
+        @foreach (GoiTap k in mListGT)
+        {
+            if (k.MaGoi.Equals(mListGT.ElementAt(0).MaGoi))
+            {
+                <option value="@k.MaGoi" selected>@k.TenGoi</option>
+            }
+            else
+            {
+                <option value="@k.MaGoi">@k.TenGoi </option>
+            }
+        }
+    </select>
+    <a href="~/GoiTap/Create"><span class="glyphicon glyphicon-plus-sign"></span></a>
+    </div>
+    <br />
+    <input type="submit" class="btn btn-primary" value="Create" /> |
+    @Html.ActionLink("Back To List", "Index", "HoiVien")
+</form>
+

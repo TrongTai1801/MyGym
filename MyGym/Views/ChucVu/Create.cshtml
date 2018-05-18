@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using MyGym.Models;
+
+<h2>Thêm Chức Vụ</h2>
+
+<br />
+<form action="/ChucVu/AddCV" method="post">
+    Mã Chức Vụ <br /> <input type="text" class="form-control" name="macv" id="macv" required/><br />
+    Tên Chức Vụ <br /><input type="text" class="form-control" name="tencv" id="tencv" required/><br />
+    Hệ Số Chức Vụ <br /><input type="number" class="form-control" name="hscv" id="hscv" required/><br />
+    <br />
+    <input type="submit" class="btn btn-primary" value="Create" onsubmit="return TextBoxIsEmpty()" /> 
+</form>
+

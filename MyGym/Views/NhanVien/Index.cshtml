@@ -1,0 +1,105 @@
+﻿
+@{
+    /**/
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<NhanVien> mListNV = ViewBag.mListNV;
+    BLL mBll = ViewBag.mBll;
+    if (mListNV != null) {
+        Session["NVsize"] = mListNV.Count;
+        int c = 0;
+        foreach (NhanVien hv in mListNV)
+        {
+            Session["NV" + c.ToString()] = hv.Ma;
+            c++;
+        }
+    }
+}
+@using MyGym.Models;
+
+<h2>Danh Sách Nhân Viên</h2>
+
+<div class="collapse navbar-collapse" id="navbarColor01">
+    <p>
+        @Html.ActionLink("Create New", "Create", "NhanVien")
+    </p>
+    <form class="form-inline" action="/NhanVien/Search" method="post">
+        <input class="form-control" type="text" name="search" id="search" placeholder="Search" required>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form><br />
+    <form class="form-inline" action="/NhanVien/Sort" method="post">
+        <select name="sort" class="form-control">
+            <option value="ten">Tên</option>
+            <option value="ngaysinh">Ngày Sinh</option>
+            <option value="mahv">Mã HV</option>
+            <option value="diachi">Địa Chỉ</option>
+            <option value="hsl">Hệ Số Lương</option>
+        </select>
+        <button class="btn btn-primary" type="submit">Sort</button>
+    </form><br />
+</div>
+
+<div>
+    <table class="table">
+        <tr>
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>CMND</th>
+            <th>Ngày Sinh</th>
+            <th>Giới Tính</th>
+            <th>Địa Chỉ</th>
+            <th>SĐT</th>
+            <th><a href="~/ChucVu/Index">Chức Vụ</a></th>
+            <th>Hệ Số Lương</th>
+            <th></th>
+        </tr>
+        @if (mListNV == null)
+        {
+            <h5>Không có kết quả phù hợp.</h5>
+        }
+        else
+        {
+            for (int i = 0; i < mListNV.Count; i++)
+        {
+        <tr>
+            <td>@mListNV[i].Ma</td>
+            <td>@mListNV[i].Ten</td>
+            <td>@mListNV[i].CMND</td>
+            <td>@mListNV[i].NgaySinh.ToString()</td>
+            <td>@(mListNV[i].GioiTinh ? "nam" : "nu")</td>
+            <td>@mListNV[i].DiaChi</td>
+            <td>@mListNV[i].SDT</td>
+            <td>@mListNV[i].ChucVu.TenChucVu</td>
+            <td>@mListNV[i].HeSoLuong</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "NhanVien", new { manv = mListNV[i].Ma }, null) |
+                @Html.ActionLink("Delete", "Delete", "NhanVien", new { manv = mListNV[i].Ma }, null)
+            </td>
+        </tr>
+        }
+        }
+    </table>
+</div>
+
+@{
+    if(mListNV != null)
+    {
+        Session["count"] = mListNV.Count;
+        for (int i = 0; i < mListNV.Count; i++)
+        {
+            Session[i.ToString()] = mListNV[i].Ma;
+        }
+    }
+
+}
+
+<script type="text/javascript">
+    function checkEmtyTextBox() {
+        if (document.getElementById("search").value == "") {
+            alert("Emty field!");
+            return false;
+        }
+        return true;
+    }
+</script>
+

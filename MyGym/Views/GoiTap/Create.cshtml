@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using MyGym.Models;
+
+<h2>Thêm Gói Tập</h2>
+
+<br />
+<form action="/GoiTap/AddGT" method="post">
+    Mã Gói <br /> <input type="text" class="form-control" name="magt" id="magt" required/><br />
+    Tên Gói <br /><input type="text" class="form-control" name="tengt" id="tengt" required/><br />
+    Giá Thành <br /><input type="number" class="form-control" name="giathanh" id="giathanh" required/><br />
+    <br />
+    <input type="submit" class="btn btn-primary" value="Create" onsubmit="return IsNumner()" /> |
+    @Html.ActionLink("Back To List", "Index", "GoiTap")
+</form>
+

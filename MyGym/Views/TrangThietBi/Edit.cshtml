@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<PhongTap> mListPT = ViewBag.mListPT;
+    TrangThietBi mTb = ViewBag.mTb;
+}
+
+@using MyGym.Models;
+
+<h2>Sửa Chi Tiểt Thiết Bị</h2>
+
+<br />
+<form action="/TrangThietBi/EditTTB" method="post">
+    Mã Thiết Bị <br /> <input type="text" class="form-control" name="matb" id="matb" value="@mTb.MaThietBi" required/><br />
+    Tên Thiết Bị <br /><input type="text" class="form-control" name="tentb" id="tentb" value="@mTb.TenThietBi" required/><br />
+    <br />
+    <fieldset>
+        <legend>Tình Trạng Sử Dụng</legend>
+        @{
+            if (mTb.TinhTrangSuDung)
+            {
+                <input type="radio" name="tinhtrangsudung" value="true" checked /><label> True</label><br />
+                <input type="radio" name="tinhtrangsudung" value="false" /><label> False</label><br /><br />
+            }
+            else
+            {
+                <input type="radio" name="tinhtrangsudung" value="true"  /><label> True</label><br />
+                <input type="radio" name="tinhtrangsudung" value="false" checked/><label> False</label><br /><br />
+            }
+            }
+    </fieldset>
+    Phong Tập <br />
+    <div class="form-inline">
+        <select name="mapt" class="form-control">
+            @foreach (PhongTap k in mListPT)
+            {
+                if (k.MaPhongTap.Equals(mTb.MaPhongTap))
+                {
+                    <option value="@k.MaPhongTap" selected>@k.TenPhongTap</option>
+                }
+                else
+                {
+                    <option value="@k.MaPhongTap">@k.TenPhongTap </option>
+                }
+            }
+        </select>
+        <a href="~/PhongTap/Create"><span class="glyphicon glyphicon-plus-sign"></span></a>
+    </div><br />
+    <input type="submit" class="btn btn-primary" value="Update"/> |
+    @Html.ActionLink("Back To List", "Index", "TrangThietBi")
+</form>
+

@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<GoiTap> mListGT = ViewBag.mListGT;
+    if (mListGT != null)
+    {
+        Session["GTsize"] = mListGT.Count;
+        int c = 0;
+        foreach (GoiTap hv in mListGT)
+        {
+            Session["GT" + c.ToString()] = hv.MaGoi;
+            c++;
+        }
+    }
+}
+@using MyGym.Models;
+
+<h2>Danh Sách Gói Tập</h2>
+
+<div class="collapse navbar-collapse" id="navbarColor01">
+    @if (Session["Login"].ToString().Equals("1"))
+    {
+        <p>
+            @if (!Session["Login"].ToString().Equals("1"))
+            {
+                @Html.ActionLink("Create New", "Create", "GoiTap", null, new { onclick = "javascript:return false;" })
+            }
+            else
+            {
+                @Html.ActionLink("Create New", "Create", "GoiTap", null, null)
+            }
+        </p>
+    }
+
+</div>
+<form class="form-inline" action="/GoiTap/Sort" method="post">
+    <input class="form-control" type="text" name="search" id="search" placeholder="Search" required>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form><br />
+<form class="form-inline" action="/GoiTap/Sort" method="post">
+    <select name="sort" class="form-control">
+        <option value="ten">Tên Gói</option>
+        <option value="gia">Giá Thành</option>
+    </select>
+    <button class="btn btn-primary" type="submit">Sort</button>
+</form><br />
+<div>
+    <table class="table">
+        <tr>
+            <th>Mã Gói</th>
+            <th>Tên Gói</th>
+            <th>Giá Thành</th>
+            <th></th>
+        </tr>
+        @if (mListGT == null) {
+            <h5>Không có kết quả phù hợp.</h5>
+        }
+        else {
+            for (int i = 0; i < mListGT.Count; i++)
+        {
+            <tr>
+                <td>@mListGT[i].MaGoi</td>
+                <td>@mListGT[i].TenGoi</td>
+                <td>@mListGT[i].GiaThanh</td>
+                @if (Session["Login"].ToString().Equals("1")) {
+                       <td>
+                    @if (!Session["Login"].ToString().Equals("1")) {
+                        @Html.ActionLink("Edit", "Edit", "GoiTap", new { magt = mListGT[i].MaGoi }, new { onclick = "javascript:return false;" })
+                    } else {
+                        @Html.ActionLink("Edit", "Edit", "GoiTap", new { magt = mListGT[i].MaGoi }, null)
+                    }
+                    |
+                    @if (!Session["Login"].ToString().Equals("1")) {
+                        @Html.ActionLink("Delete", "Delete", "GoiTap", new { magoi = mListGT[i].MaGoi }, new { onclick = "javascript:return false;" })
+                    } else {
+                        @Html.ActionLink("Delete", "Delete", "GoiTap", new { magoi = mListGT[i].MaGoi }, null)
+                    }
+                    |
+                    @if (!Session["Login"].ToString().Equals("1")) {
+                        @Html.ActionLink("Register", "SearchFromGT", "HoiVien", new { magoi = mListGT[i].MaGoi }, new { onclick = "javascript:return false;" })
+                    } else {
+                        @Html.ActionLink("Register", "SearchFromGT", "HoiVien", new { magoi = mListGT[i].MaGoi }, null)
+                    }
+                </td>
+                }
+                
+            </tr>
+        }
+        }
+    </table>
+</div>
+

@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<GoiTap> mListGT = ViewBag.mListGT;
+    HoiVien mHV = ViewBag.mHV;
+}
+
+@using MyGym.Models;
+
+<h2>Sửa Hội Viên</h2>
+
+<br />
+<form action="/HoiVien/EditHV" name="form" method="post">
+    Mã Hội Viên <br /> <input type="text" class="form-control" name="mahv" id="mahv" required value="@mHV.Ma"/><br />
+    Tên Hội Viên <br /><input type="text" class="form-control" name="tenhv" id="tenhv" required value="@mHV.Ten"/><br />
+    CMND <br /><input type="number" class="form-control" name="cmnd" id="cmnd" required value="@mHV.CMND"/><br />
+    Ngày Sinh <br /><input type="date" class="form-control" name="ngaysinh" required id="ngaysinh" value="@DateTime.Parse(mHV.NgaySinh.ToString()).ToString("yyyy-MM-dd")"/><br />
+    SDT <br /><input type="number" class="form-control" name="sdt" id="sdt" required value="@mHV.SDT"/><br />
+    Địa Chỉ <br /><input type="text" class="form-control" name="diachi" id="diachi" required value="@mHV.DiaChi"/><br />
+    <fieldset>
+        <legend>Gioi tinh</legend>
+        @{ 
+            if (mHV.GioiTinh)
+        {
+        <input type="radio" name="gioitinh" value="male" id="male" checked /><label> Male</label><br />
+        <input type="radio" name="gioitinh" value="female" id="female" /><label> Female</label><br /><br />
+        }
+        else {
+        <input type="radio" name="gioitinh" value="male" /><label> Male</label><br />
+        <input type="radio" name="gioitinh" value="female" checked /><label> Female</label><br /><br />
+        }
+        }
+    </fieldset>
+    <div class="form-inline">
+        Goi Dang Ky <br />
+        <select name="magoi" class="form-control">
+            @foreach (GoiTap k in mListGT)
+            {
+                if (k.MaGoi.Equals(mHV.MaGoi))
+                {
+                    <option value="@k.MaGoi" selected>@k.TenGoi</option>
+                }
+                else
+                {
+                    <option value="@k.MaGoi">@k.TenGoi </option>
+                }
+            }
+        </select>
+        <a href="~/GoiTap/Create"><span class="glyphicon glyphicon-plus-sign"></span></a>
+    </div>
+    <br />
+    <input type="submit" class="btn btn-primary" value="Update" onsubmit="return TextBoxIsEmpty()" /> |
+    @Html.ActionLink("Back To List", "Index", "HoiVien")
+</form>
+

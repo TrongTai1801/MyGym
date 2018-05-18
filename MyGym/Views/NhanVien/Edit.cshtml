@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<ChucVu> mListCV = ViewBag.mListCV;
+    NhanVien mNV = ViewBag.mNV;
+}
+
+@using MyGym.Models;
+
+<h2>Sửa Nhân Viên</h2>
+
+<br />
+<form action="/NhanVien/EditNV" name="form" method="post">
+    Mã Nhân Viên <br /> <input type="text" class="form-control" name="mahv" id="mahv" required value="@mNV.Ma" /><br />
+    Tên Nhân Viên <br /><input type="text" class="form-control" name="tenhv" id="tenhv" required value="@mNV.Ten" /><br />
+    CMND <br /><input type="number" class="form-control" name="cmnd" id="cmnd" required value="@mNV.CMND" /><br />
+    Ngày Sinh <br /><input type="date" class="form-control" name="ngaysinh" required id="ngaysinh" value="@DateTime.Parse(mNV.NgaySinh.ToString()).ToString("yyyy-MM-dd")" /><br />
+    SDT <br /><input type="number" class="form-control" name="sdt" id="sdt" required value="@mNV.SDT" /><br />
+    Địa Chỉ <br /><input type="text" class="form-control" name="diachi" required id="diachi" value="@mNV.DiaChi" /><br />
+    <fieldset>
+        <legend>Gioi tinh</legend>
+        @{
+            if (mNV.GioiTinh)
+            {
+                <input type="radio" name="gioitinh" value="male" id="male" checked /><label> Male</label><br />
+                <input type="radio" name="gioitinh" value="female" id="female" /><label> Female</label><br /><br />
+            }
+            else
+            {
+                <input type="radio" name="gioitinh" value="male" /><label> Male</label><br />
+                <input type="radio" name="gioitinh" value="female" checked /><label> Female</label><br /><br />
+            }
+        }
+    </fieldset>
+    <div class="form-inline">
+        Chức Vụ <br />
+        <select name="machucvu" class="form-control">
+            @foreach (ChucVu k in mListCV)
+            {
+                if (k.MaChucVu.Equals(mNV.MaChucVu))
+                {
+                    <option value="@k.MaChucVu" selected>@k.TenChucVu</option>
+                }
+                else
+                {
+                    <option value="@k.MaChucVu">@k.TenChucVu </option>
+                }
+            }
+        </select>
+        <a href="~/ChucVu/Create"><span class="glyphicon glyphicon-plus-sign"></span></a><br />
+    </div><br />
+    Hệ Số Lương <br /><input type="number" class="form-control" name="hsl" id="hsl" value="@mNV.HeSoLuong"/><br />
+    <br />
+    <input type="submit" class="btn btn-primary" value="Update"/> |
+    @Html.ActionLink("Back To List", "Index", "NhanVien")
+</form>
+</script>
+

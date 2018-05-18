@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<PhongTap> mListPT = ViewBag.mListPT;
+}
+
+@using MyGym.Models;
+
+<h2>Thêm Trang Thiết Bị</h2>
+
+<br />
+<form action="/TrangThietBi/AddTTB" method="post">
+    Mã Thiết Bị <br /> <input type="text" class="form-control" name="matb" id="matb" required/><br />
+    Tên Thiết Bị <br /><input type="text" class="form-control" name="tentb" id="tentb" required/><br />
+    <br />
+    <fieldset>
+        <legend>Tình Trạng Sử Dụng</legend>
+        <input type="radio" name="tinhtrangsudung" value="true" checked /><label> True</label><br />
+        <input type="radio" name="tinhtrangsudung" value="false" /><label> False</label><br /><br />
+    </fieldset>
+    Phong Tập <br />
+    <div class="form-inline">
+        <select name="mapt" class="form-control">
+        @foreach (PhongTap k in mListPT)
+        {
+            if (k.MaPhongTap.Equals(mListPT.ElementAt(0).MaPhongTap))
+            {
+                <option value="@k.MaPhongTap" selected>@k.TenPhongTap</option>
+            }
+            else
+            {
+                <option value="@k.MaPhongTap">@k.TenPhongTap </option>
+            }
+        }
+    </select>
+    <a href="~/PhongTap/Create"><span class="glyphicon glyphicon-plus-sign"></span></a>
+    </div><br />
+    <input type="submit" class="btn btn-primary" value="Create" /> |
+    @Html.ActionLink("Back To List", "Index", "TrangThietBi")
+</form>
+

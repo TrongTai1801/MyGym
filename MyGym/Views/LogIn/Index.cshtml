@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Đăng nhập</h2>
+
+<form action="/LogIn/CheckLogin" method="post" class="class=" form-inline"" >
+    Tên Đăng Nhâp: <input type="text" name="tenDangNhap" id="tenDangNhap" class="form-control" required/>
+    <br />
+    Mật Khẩu: <input type="password" name="matKhau" id="matKhau" class="form-control" required/>
+    <br />
+    <input type="submit" value="Login" class="btn btn-primary" />
+</form>
+
